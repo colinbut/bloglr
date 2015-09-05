@@ -13,6 +13,7 @@ import java.util.List;
 public class BlogPost {
 
 	private String title;
+	private Author author;
 	private LocalDateTime dateCreated;
 	private LocalDateTime dateUpdated;
 	private String content;
