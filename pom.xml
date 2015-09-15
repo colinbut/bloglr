@@ -8,27 +8,66 @@
 	<name>Bloglr</name>
 	<url>http://maven.apache.org</url>
 
+	<properties>
+		<junit.version>4.12</junit.version>
+		<jsf.version>2.1.7</jsf.version>
+		<mysql.version>5.1.9</mysql.version>
+		<hibernate.core.version>4.3.10.Final</hibernate.core.version>
+		<hibernate.entitymanager.version>4.3.10.Final</hibernate.entitymanager.version>
+		<hibernate.c3po.version>4.3.10.Final</hibernate.c3po.version>
+	</properties>
+
 	<dependencies>
 
 		<!-- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 
-		<!-- JSF dependencies -->
+		<!-- JSF -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
-			<version>2.1.7</version>
+			<version>${jsf.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.sun.faces</groupId> 
 			<artifactId>jsf-impl</artifactId>  <!-- Mojarra/Faces -->
-			<version>2.1.7</version>
+			<version>${jsf.version}</version>
+		</dependency>
+		
+		<!-- MySQL database driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		
+		<!-- JPA/Hibernate -->
+		
+		<!-- Hibernate dependency -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.core.version}</version>
+		</dependency>
+
+		<!-- for Hibernate - JPA -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.entitymanager.version}</version>
+		</dependency>
+
+		<!-- For connection pooling (c3p0) -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.c3po.version}</version>
 		</dependency>
 
 	</dependencies>
