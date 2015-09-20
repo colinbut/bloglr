@@ -26,14 +26,14 @@
 						<h:outputLabel value="Blog Content:"></h:outputLabel>
 					</td>
 					<td>
-						<h:inputTextarea value="" cols="80" rows="15"></h:inputTextarea>
+						<h:inputTextarea cols="80" rows="15"></h:inputTextarea>
 					</td>
 				</tr>
 				<tr>
 					<td></td>
 					<td>
 						<h:commandButton type="reset" value="Reset"></h:commandButton>
-						<h:commandButton type="submit" value="Submit"></h:commandButton>
+						<h:commandButton value="Submit" action="#{blogBean.getUsers}"></h:commandButton>
 					</td>
 				</tr>
 			</table>

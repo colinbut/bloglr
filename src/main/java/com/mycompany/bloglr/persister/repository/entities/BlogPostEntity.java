@@ -5,7 +5,7 @@
  */
 package com.mycompany.bloglr.persister.repository.entities;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,7 +33,7 @@ public class BlogPostEntity {
 	private int blogPostId;
 	private String blogTitle;
 	private String blogContent;
-	private LocalDateTime createdDate;
+	private Date createdDate;
 	private BlogUserEntity author;
 	
 	@Id
@@ -67,11 +67,11 @@ public class BlogPostEntity {
 	
 	@Column(name = "created_date")
 	@Temporal(TemporalType.TIMESTAMP)
-	public LocalDateTime getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 	
-	public void setCreatedDate(LocalDateTime createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 	
