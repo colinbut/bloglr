@@ -15,9 +15,16 @@
 		<hibernate.core.version>4.3.10.Final</hibernate.core.version>
 		<hibernate.entitymanager.version>4.3.10.Final</hibernate.entitymanager.version>
 		<hibernate.c3po.version>4.3.10.Final</hibernate.c3po.version>
+		<slf4j-log4j12.version>1.6.1</slf4j-log4j12.version>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<version>3.0</version>
+		</dependency>
 
 		<!-- JUnit -->
 		<dependency>
@@ -68,6 +75,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>${hibernate.c3po.version}</version>
+		</dependency>
+		
+		<!-- slf4j-log4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-log4j12.version}</version>
 		</dependency>
 
 	</dependencies>
