@@ -2,26 +2,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
-      
-	<h:head>
-		<title>Bloglr</title>
-	</h:head>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
-	<h:body>
+<h:head>
+	<title>Bloglr</title>
+</h:head>
+
+<h:body>
+
+	<h1>Bloglr</h1>
+
+	<h:form>
+
 		<div>
-			<h:form>
-				<h:commandButton value="Add New Post" action="addPost"></h:commandButton>
-			</h:form>
+			<h:commandButton value="Add New Post" action="addPost"></h:commandButton>
 		</div>
-		
+
 		<div>
-		
+			<h:dataTable value="#{blogBean.blogList}" var="blogPost" 
+							styleClass="blog-list-table" 
+							headerClass="blog-list-table-header"
+							rowClasses="blog-list-table-odd-row,blog-list-table-even-row">
+
+				<h:column>
+					<f:facet name="header">
+						<h:commandLink action="#{blogBean.sortByPostId}">
+							Post #
+						</h:commandLink>
+					</f:facet>
+					<h:outputLabel value="#{blogPost.postId}"></h:outputLabel>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Title</f:facet>
+					<h:inputText value="#{blogPost.title}" size="30" rendered="#{blogPost.editable}"></h:inputText>
+					<h:outputText value="#{blogPost.title}" rendered="#{not blogPost.editable}"></h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Date Created</f:facet>
+					<h:outputText value="#{blogPost.dateCreated}">
+						<!-- <f:convertDateTime pattern="dd-MM-yyyy"></f:convertDateTime> -->
+					</h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Action</f:facet>
+					<h:commandLink value="Delete" action="#{blogBean.deleteBlogPost(blogPost)}"></h:commandLink>
+					<h:outputLabel value=" | "></h:outputLabel>
+					<h:commandLink value="Edit" action="#{blogBean.editBlogPost(blogPost)}"></h:commandLink>
+				</h:column>
+
+			</h:dataTable>
+			
+			<h:commandButton value="Save Changes" action="#{blogBean.saveBlogPost}"></h:commandButton>
 		</div>
-		
-		
-	</h:body>
-	
-      
+
+	</h:form>
+
+
+</h:body>
+
+
 </html>
