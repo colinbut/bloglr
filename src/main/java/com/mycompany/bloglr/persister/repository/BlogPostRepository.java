@@ -18,5 +18,9 @@ import com.mycompany.bloglr.persister.repository.entities.BlogPostEntity;
 @Remote
 public interface BlogPostRepository {
 
-	BlogPostEntity findById();
+	BlogPostEntity findById(int id);
+	
+	BlogPostEntity save(BlogPostEntity blogPostEntity);
+	
+	BlogPostEntity delete(BlogPostEntity blogPostEntity);
 }

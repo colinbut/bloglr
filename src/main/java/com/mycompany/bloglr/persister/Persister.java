@@ -5,22 +5,24 @@
  */
 package com.mycompany.bloglr.persister;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Remote;
 
-import com.mycompany.bloglr.persister.repository.BlogPostRepository;
-import com.mycompany.bloglr.persister.repository.BlogUserRepository;
+import com.mycompany.bloglr.persister.repository.entities.BlogPostEntity;
 
 /**
  * @author colin
  *
  */
-@Stateful
-public class Persister {
+@Remote
+public interface Persister {
 
-	@EJB
-	private BlogUserRepository blogUserRepository;
+	BlogPostEntity findBlogPost(int id);
 	
-	@EJB
-	private BlogPostRepository blogPostRepository;
+	boolean addBlogPost(BlogPostEntity blogPostEntity);
+
+	boolean editBlogPost(BlogPostEntity blogPostEntity);
+	
+	boolean deleteBlogPost(BlogPostEntity blogPostEntity);
+	
+	
 }
