@@ -37,7 +37,9 @@
 				<h:column>
 					<f:facet name="header">Title</f:facet>
 					<h:inputText value="#{blogPost.title}" size="30" rendered="#{blogPost.editable}"></h:inputText>
-					<h:outputText value="#{blogPost.title}" rendered="#{not blogPost.editable}"></h:outputText>
+					<h:link value="#{blogPost.title}" rendered="#{not blogPost.editable}" outcome="blogPost">
+						<f:param name="blogPostId" value="#{blogPost.postId}"></f:param>
+					</h:link>
 				</h:column>
 
 				<h:column>
