@@ -11,7 +11,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.mycompany.bloglr.persister.repository.entities.BlogPostEntity;
+import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
 
 /**
  * {@link BlogPostRepositoryImpl} implementation of {@link BlogPostRepository} interface

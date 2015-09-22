@@ -10,7 +10,7 @@ import javax.ejb.Stateful;
 
 import com.mycompany.bloglr.persister.repository.BlogPostRepository;
 import com.mycompany.bloglr.persister.repository.BlogUserRepository;
-import com.mycompany.bloglr.persister.repository.entities.BlogPostEntity;
+import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
 
 /**
  * {@link PersisterImpl} - implementation of {@link Persister} interface

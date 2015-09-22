@@ -9,7 +9,7 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.mycompany.bloglr.persister.repository.entities.BlogUserEntity;
+import com.mycompany.bloglr.persister.repository.entity.BlogUserEntity;
 
 /**
  * {@link BlogUserRepositoryImpl} implementation of {@link BlogUserRepository} interface

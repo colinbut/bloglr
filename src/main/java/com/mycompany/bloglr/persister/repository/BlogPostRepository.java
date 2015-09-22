@@ -7,7 +7,7 @@ package com.mycompany.bloglr.persister.repository;
 
 import javax.ejb.Remote;
 
-import com.mycompany.bloglr.persister.repository.entities.BlogPostEntity;
+import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
 
 /**
  * {@link BlogPostRepository} interface
