@@ -13,7 +13,7 @@ import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
  * @author colin
  *
  */
-@Remote
+//@Remote
 public interface Persister {
 
 	BlogPostEntity findBlogPost(int id);

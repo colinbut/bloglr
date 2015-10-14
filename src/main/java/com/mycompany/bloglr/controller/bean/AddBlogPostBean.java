@@ -7,9 +7,13 @@ package com.mycompany.bloglr.controller.bean;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.mycompany.bloglr.controller.Controller;
+import com.mycompany.bloglr.domain.dto.BlogPostDto;
 
 /**
  * {@link AddBlogPostBean} 
@@ -21,7 +25,10 @@ import org.slf4j.LoggerFactory;
 @RequestScoped
 public class AddBlogPostBean {
 
-	final Logger logger = LoggerFactory.getLogger(getClass());
+	private static final Logger logger = LoggerFactory.getLogger(AddBlogPostBean.class);
+	
+	@Inject
+	private Controller controller;
 	
 	private String blogPostTitle;
 	private String blogPostContent;
@@ -44,6 +51,10 @@ public class AddBlogPostBean {
 
 	public String addBlogPost() {
 		logger.info("Adding new blog post: ");
+		BlogPostDto blogPostDto = new BlogPostDto();
+		blogPostDto.setTitle(blogPostTitle);
+		blogPostDto.setContent(blogPostContent);
+		controller.addBlogPost(blogPostDto);
 		return null;
 	}
 }

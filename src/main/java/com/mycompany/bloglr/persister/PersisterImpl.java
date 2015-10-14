@@ -7,7 +7,10 @@ package com.mycompany.bloglr.persister;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Model;
 
+import com.mycompany.bloglr.common.annotation.DataAccess;
 import com.mycompany.bloglr.persister.repository.BlogPostRepository;
 import com.mycompany.bloglr.persister.repository.BlogUserRepository;
 import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
@@ -18,7 +21,7 @@ import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
  * @author colin
  *
  */
-@Stateful
+@Model
 public class PersisterImpl implements Persister {
 
 	@EJB

@@ -32,7 +32,7 @@ public class BlogBean implements Serializable {
 
 	private static final long serialVersionUID = 2112003448015528406L;
 
-	final Logger logger = LoggerFactory.getLogger(getClass());
+	private static final Logger logger = LoggerFactory.getLogger(BlogBean.class);
 	
 	private List<BlogPost> blogList = new ArrayList<>();
 	
