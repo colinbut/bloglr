@@ -6,24 +6,24 @@
 package com.mycompany.bloglr.controller;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.blogengine.BlogEngine;
+import com.mycompany.bloglr.common.annotation.Controller;
 import com.mycompany.bloglr.domain.dto.BlogPostDto;
 
 /**
- * {@link Controller} 
+ * {@link BlogController} 
  * 
  * @author colin
  *
  */
-@Named("controller")
-public class Controller {
+@Controller
+public class BlogController {
 
-	private static final Logger logger = LoggerFactory.getLogger(Controller.class);
+	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
 	
 	@Inject
 	private BlogEngine blogEngine;

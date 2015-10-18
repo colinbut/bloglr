@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mycompany.bloglr.controller.Controller;
+import com.mycompany.bloglr.controller.BlogController;
 import com.mycompany.bloglr.domain.dto.BlogPostDto;
 
 /**
@@ -28,7 +28,7 @@ public class AddBlogPostBean {
 	private static final Logger logger = LoggerFactory.getLogger(AddBlogPostBean.class);
 	
 	@Inject
-	private Controller controller;
+	private BlogController controller;
 	
 	private String blogPostTitle;
 	private String blogPostContent;
@@ -57,4 +57,12 @@ public class AddBlogPostBean {
 		controller.addBlogPost(blogPostDto);
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "AddBlogPostBean [controller=" + controller + ", blogPostTitle=" + blogPostTitle + ", blogPostContent="
+				+ blogPostContent + "]";
+	}
+	
+	
 }

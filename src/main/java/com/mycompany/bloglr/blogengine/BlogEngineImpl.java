@@ -5,6 +5,9 @@
  */
 package com.mycompany.bloglr.blogengine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
@@ -14,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.common.annotation.DataAccess;
 import com.mycompany.bloglr.domain.dto.BlogPostDto;
+import com.mycompany.bloglr.domain.model.BlogPost;
 import com.mycompany.bloglr.persister.Persister;
 import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
 
@@ -31,11 +35,19 @@ public class BlogEngineImpl implements BlogEngine {
 	@Inject
 	private Persister persister;
 	
+	private List<BlogPost> blogPosts = new ArrayList<>();
+	
 	/**
 	 * Constructor
 	 */
 	public BlogEngineImpl() {
 		
+	}
+	
+	private void loadBlogPosts() {
+		// load from db
+		
+		// put into blogPosts list
 	}
 	
 	/**
@@ -65,7 +77,7 @@ public class BlogEngineImpl implements BlogEngine {
 	 */
 	@Override
 	public void editBlogPost(BlogPostDto blogPostDto) {
-		
+		logger.info("Editing blog post: " + blogPostDto);
 	}
 	
 	

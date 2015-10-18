@@ -14,11 +14,13 @@ import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mycompany.bloglr.domain.model.BlogPost;
+import com.mycompany.bloglr.controller.BlogController;
+import com.mycompany.bloglr.domain.dto.BlogPostDto;
 
 /**
  * {@link BlogBean} 
@@ -34,15 +36,18 @@ public class BlogBean implements Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(BlogBean.class);
 	
-	private List<BlogPost> blogList = new ArrayList<>();
+	private List<BlogPostDto> blogList = new ArrayList<>();
 	
 	private boolean sortAscending = true;
 	
-	public List<BlogPost> getBlogList() {
+	@Inject
+	private BlogController controller;
+	
+	public List<BlogPostDto> getBlogList() {
 		return blogList;
 	}
 
-	public void setBlogList(List<BlogPost> blogList) {
+	public void setBlogList(List<BlogPostDto> blogList) {
 		this.blogList = blogList;
 	}
 		
@@ -53,7 +58,7 @@ public class BlogBean implements Serializable {
 	private void setupBlogPostStubs() {
 		
 		for(int i = 1; i <= 20; i++) {
-			BlogPost blogPost = new BlogPost();
+			BlogPostDto blogPost = new BlogPostDto();
 			blogPost.setPostId(i);
 			blogPost.setTitle("Title");
 			blogPost.setContent("Content");
@@ -64,19 +69,16 @@ public class BlogBean implements Serializable {
 	}
 	
 	
-	public String addBlogPost(BlogPost blogPost) {
+	public String deleteBlogPost(BlogPostDto blogPostDto) {
+		logger.info("Deleting blog post: " + blogPostDto);
+		controller.deleteBlogPost(blogPostDto);
+		blogList.remove(blogPostDto);
 		return null;
 	}
 	
-	public String deleteBlogPost(BlogPost blogPost) {
-		logger.info("Deleting blog post: " + blogPost);
-		blogList.remove(blogPost);
-		return null;
-	}
-	
-	public String editBlogPost(BlogPost blogPost) {
-		logger.info("Edited blog post: " + blogPost);
-		blogPost.setEditable(true);
+	public String editBlogPost(BlogPostDto blogPostdto) {
+		logger.info("Edited blog post: " + blogPostdto);
+		blogPostdto.setEditable(true);
 		return null;
 	}
 	
@@ -88,10 +90,10 @@ public class BlogBean implements Serializable {
 	public String sortByPostId() {
 		
 		if(sortAscending) {
-			Collections.sort(blogList, new Comparator<BlogPost>() {
+			Collections.sort(blogList, new Comparator<BlogPostDto>() {
 
 				@Override
-				public int compare(BlogPost o1, BlogPost o2) {
+				public int compare(BlogPostDto o1, BlogPostDto o2) {
 					String bp1 = Integer.toString(o1.getPostId());
 					String bp2 = Integer.toString(o2.getPostId());
 					return bp1.compareTo(bp2);
@@ -99,10 +101,10 @@ public class BlogBean implements Serializable {
 			});
 			sortAscending = false;
 		} else {
-			Collections.sort(blogList, new Comparator<BlogPost>() {
+			Collections.sort(blogList, new Comparator<BlogPostDto>() {
 
 				@Override
-				public int compare(BlogPost o1, BlogPost o2) {
+				public int compare(BlogPostDto o1, BlogPostDto o2) {
 					String bp1 = Integer.toString(o1.getPostId());
 					String bp2 = Integer.toString(o2.getPostId());
 					return bp2.compareTo(bp1);

@@ -15,7 +15,7 @@
 			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.classloading.use_current_tccl_as_parent" value="false"/> 
+			<property name="hibernate.classloading.use_current_tccl_as_parent" value="false"/> 	
 		</properties>
 					
 	</persistence-unit>

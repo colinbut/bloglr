@@ -10,6 +10,9 @@ import javax.ejb.Stateful;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mycompany.bloglr.common.annotation.DataAccess;
 import com.mycompany.bloglr.persister.repository.BlogPostRepository;
 import com.mycompany.bloglr.persister.repository.BlogUserRepository;
@@ -21,9 +24,11 @@ import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
  * @author colin
  *
  */
-@Model
+@DataAccess
 public class PersisterImpl implements Persister {
 
+	private static final Logger logger = LoggerFactory.getLogger(PersisterImpl.class);
+	
 	@EJB
 	private BlogUserRepository blogUserRepository;
 	
@@ -35,6 +40,7 @@ public class PersisterImpl implements Persister {
 	 */
 	@Override
 	public BlogPostEntity findBlogPost(int id) {
+		logger.info("Finding blog post: " + id);
 		return blogPostRepository.findById(id);
 	}
 
