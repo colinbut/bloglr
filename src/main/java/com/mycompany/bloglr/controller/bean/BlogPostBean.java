@@ -13,7 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import com.mycompany.bloglr.domain.model.BlogComment;
+import com.mycompany.bloglr.blogengine.domain.BlogComment;
 
 /**
  * {@link BlogPostBean} 

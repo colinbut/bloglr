@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.blogengine.BlogEngine;
 import com.mycompany.bloglr.common.annotation.Controller;
-import com.mycompany.bloglr.domain.dto.BlogPostDto;
+import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
 /**
  * {@link BlogController} 

@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.controller.BlogController;
-import com.mycompany.bloglr.domain.dto.BlogPostDto;
+import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
 /**
  * {@link AddBlogPostBean} 

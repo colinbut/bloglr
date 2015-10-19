@@ -15,9 +15,9 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mycompany.bloglr.blogengine.domain.BlogPost;
 import com.mycompany.bloglr.common.annotation.DataAccess;
-import com.mycompany.bloglr.domain.dto.BlogPostDto;
-import com.mycompany.bloglr.domain.model.BlogPost;
+import com.mycompany.bloglr.controller.dto.BlogPostDto;
 import com.mycompany.bloglr.persister.Persister;
 import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 

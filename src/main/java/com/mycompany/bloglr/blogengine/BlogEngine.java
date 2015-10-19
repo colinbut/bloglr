@@ -5,7 +5,7 @@
  */
 package com.mycompany.bloglr.blogengine;
 
-import com.mycompany.bloglr.domain.dto.BlogPostDto;
+import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
 /**
  * 

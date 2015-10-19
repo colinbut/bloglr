@@ -3,7 +3,7 @@
  * | Copyright © 2015 Colin But. All rights reserved. 
  * |-------------------------------------------------
  */
-package com.mycompany.bloglr.domain.dto;
+package com.mycompany.bloglr.controller.dto;
 
 import java.time.LocalDateTime;
 
