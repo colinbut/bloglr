@@ -3,20 +3,20 @@
  * | Copyright © 2015 Colin But. All rights reserved. 
  * |-------------------------------------------------
  */
-package com.mycompany.bloglr.persister.repository;
+package com.mycompany.bloglr.persister.dao;
 
 import javax.ejb.Remote;
 
-import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
+import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
- * {@link BlogPostRepository} interface
+ * {@link BlogPostDao} interface
  * 
  * @author colin
  *
  */
 @Remote
-public interface BlogPostRepository {
+public interface BlogPostDao {
 
 	BlogPostEntity findById(int id);
 	

@@ -19,7 +19,7 @@ import com.mycompany.bloglr.common.annotation.DataAccess;
 import com.mycompany.bloglr.domain.dto.BlogPostDto;
 import com.mycompany.bloglr.domain.model.BlogPost;
 import com.mycompany.bloglr.persister.Persister;
-import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
+import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
  * Implementation of {@link BlogEngine} interface

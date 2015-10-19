@@ -3,22 +3,22 @@
  * | Copyright © 2015 Colin But. All rights reserved. 
  * |-------------------------------------------------
  */
-package com.mycompany.bloglr.persister.repository;
+package com.mycompany.bloglr.persister.dao;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.mycompany.bloglr.persister.repository.entity.BlogUserEntity;
+import com.mycompany.bloglr.persister.dao.entity.BlogUserEntity;
 
 /**
- * {@link BlogUserRepositoryImpl} implementation of {@link BlogUserRepository} interface
+ * {@link BlogUserDaoImpl} implementation of {@link BlogUserDao} interface
  * 
  * @author colin
  *
  */
 @Stateful
-public class BlogUserRepositoryImpl implements BlogUserRepository {
+public class BlogUserDaoImpl implements BlogUserDao {
 
 	@PersistenceContext(unitName = "com.mycompany.bloglr.entitymanager")
 	private EntityManager entityManager;

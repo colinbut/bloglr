@@ -14,9 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.common.annotation.DataAccess;
-import com.mycompany.bloglr.persister.repository.BlogPostRepository;
-import com.mycompany.bloglr.persister.repository.BlogUserRepository;
-import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
+import com.mycompany.bloglr.persister.dao.BlogPostDao;
+import com.mycompany.bloglr.persister.dao.BlogUserDao;
+import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
  * {@link PersisterImpl} - implementation of {@link Persister} interface
@@ -30,10 +30,10 @@ public class PersisterImpl implements Persister {
 	private static final Logger logger = LoggerFactory.getLogger(PersisterImpl.class);
 	
 	@EJB
-	private BlogUserRepository blogUserRepository;
+	private BlogUserDao blogUserRepository;
 	
 	@EJB
-	private BlogPostRepository blogPostRepository;
+	private BlogPostDao blogPostRepository;
 
 	/**
 	 * {@inheritDoc}

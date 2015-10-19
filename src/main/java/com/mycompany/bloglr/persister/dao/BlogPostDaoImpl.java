@@ -3,7 +3,7 @@
  * | Copyright © 2015 Colin But. All rights reserved. 
  * |-------------------------------------------------
  */
-package com.mycompany.bloglr.persister.repository;
+package com.mycompany.bloglr.persister.dao;
 
 import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
@@ -11,17 +11,17 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.mycompany.bloglr.persister.repository.entity.BlogPostEntity;
+import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
- * {@link BlogPostRepositoryImpl} implementation of {@link BlogPostRepository} interface
+ * {@link BlogPostDaoImpl} implementation of {@link BlogPostDao} interface
  * 
  * @author colin
  *
  */
 @Stateful
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class BlogPostRepositoryImpl implements BlogPostRepository {
+public class BlogPostDaoImpl implements BlogPostDao {
 
 	@PersistenceContext(unitName = "com.mycompany.bloglr.entitymanager")
 	private EntityManager entityManager;
