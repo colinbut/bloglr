@@ -41,7 +41,7 @@ public class BlogPostRepositoryImpl implements BlogPostRepository {
 	@Override
 	public BlogPostEntity save(BlogPostEntity blogPostEntity) {
 		entityManager.persist(blogPostEntity);
-		return null;
+		return blogPostEntity;
 	}
 
 	/**

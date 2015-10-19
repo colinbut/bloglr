@@ -28,16 +28,31 @@ public class BlogController {
 	@Inject
 	private BlogEngine blogEngine;
 	
+	/**
+	 * Adds a new blog post
+	 * 
+	 * @param blogPostDto
+	 */
 	public void addBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Adding new blog post: " + blogPostDto);
 		blogEngine.addBlogPost(blogPostDto);
 	}
 	
+	/**
+	 * Deletes an existing blog post
+	 * 
+	 * @param blogPostDto
+	 */
 	public void deleteBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Deleting blog post: " + blogPostDto);
 		blogEngine.deleteBlogPost(blogPostDto);
 	}
 	
+	/**
+	 * Edit an existing blog post
+	 * 
+	 * @param blogPostDto
+	 */
 	public void editBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Edit blog post: " + blogPostDto);
 		blogEngine.editBlogPost(blogPostDto);

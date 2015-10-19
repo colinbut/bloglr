@@ -1,7 +1,17 @@
+/*
+ * |-------------------------------------------------
+ * | Copyright © 2015 Colin But. All rights reserved. 
+ * |-------------------------------------------------
+ */
 package com.mycompany.bloglr.domain.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * 
+ * @author colin
+ *
+ */
 public class BlogPostDto {
 
 	private int postId;
@@ -50,6 +60,11 @@ public class BlogPostDto {
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "BlogPostDto [postId=" + postId + ", title=" + title + ", content=" + content + ", dateCreated="
+				+ dateCreated + ", editable=" + editable + "]";
+	}
+		
 }

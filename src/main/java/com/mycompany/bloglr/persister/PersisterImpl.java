@@ -49,6 +49,9 @@ public class PersisterImpl implements Persister {
 	 */
 	@Override
 	public boolean addBlogPost(BlogPostEntity blogPostEntity) {
+		
+		logger.info("Adding new blog post to database");
+		
 		BlogPostEntity savedBlogPostEntity = blogPostRepository.save(blogPostEntity);
 		if(savedBlogPostEntity != null) {
 			return true;

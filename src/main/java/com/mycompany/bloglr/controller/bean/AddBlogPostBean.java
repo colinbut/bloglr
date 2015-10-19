@@ -5,6 +5,8 @@
  */
 package com.mycompany.bloglr.controller.bean;
 
+import java.time.LocalDateTime;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
@@ -54,6 +56,8 @@ public class AddBlogPostBean {
 		BlogPostDto blogPostDto = new BlogPostDto();
 		blogPostDto.setTitle(blogPostTitle);
 		blogPostDto.setContent(blogPostContent);
+		blogPostDto.setDateCreated(LocalDateTime.now());
+		
 		controller.addBlogPost(blogPostDto);
 		return null;
 	}

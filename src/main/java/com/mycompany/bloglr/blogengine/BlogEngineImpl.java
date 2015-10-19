@@ -55,11 +55,17 @@ public class BlogEngineImpl implements BlogEngine {
 	 */
 	@Override
 	public void addBlogPost(BlogPostDto blogPostDto) {
+		
 		logger.info("Adding new blog post: " + blogPostDto);
+		
 		BlogPostEntity blogPostEntity = new BlogPostEntity();
 		blogPostEntity.setBlogTitle(blogPostDto.getTitle());
 		blogPostEntity.setBlogContent(blogPostDto.getContent());
-		persister.addBlogPost(blogPostEntity);
+		//blogPostEntity.setCreatedDate(blogPostDto.getDateCreated());
+		
+		if(persister.addBlogPost(blogPostEntity)) {
+			logger.info("Successfully added new blog post");
+		}
 	}
 
 	/**
