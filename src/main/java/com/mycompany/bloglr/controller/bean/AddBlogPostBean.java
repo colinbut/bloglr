@@ -59,7 +59,7 @@ public class AddBlogPostBean {
 		blogPostDto.setDateCreated(LocalDateTime.now());
 		
 		controller.addBlogPost(blogPostDto);
-		return null;
+		return "bloglist?faces-redirect=true";
 	}
 
 	@Override

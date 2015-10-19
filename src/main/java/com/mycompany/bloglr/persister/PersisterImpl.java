@@ -5,10 +5,9 @@
  */
 package com.mycompany.bloglr.persister;
 
+import java.util.List;
+
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
-import javax.enterprise.inject.Default;
-import javax.enterprise.inject.Model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +73,14 @@ public class PersisterImpl implements Persister {
 	public boolean deleteBlogPost(BlogPostEntity blogPostEntity) {
 		blogPostRepository.delete(blogPostEntity);
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<BlogPostEntity> getBlogList() {
+		return blogPostRepository.getAll();
 	}
 	
 	

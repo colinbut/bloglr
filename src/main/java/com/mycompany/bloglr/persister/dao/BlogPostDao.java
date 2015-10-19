@@ -5,6 +5,8 @@
  */
 package com.mycompany.bloglr.persister.dao;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
@@ -23,4 +25,6 @@ public interface BlogPostDao {
 	BlogPostEntity save(BlogPostEntity blogPostEntity);
 	
 	BlogPostEntity delete(BlogPostEntity blogPostEntity);
+	
+	List<BlogPostEntity> getAll();
 }

@@ -5,12 +5,16 @@
  */
 package com.mycompany.bloglr.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.blogengine.BlogEngine;
+import com.mycompany.bloglr.blogengine.domain.BlogPost;
 import com.mycompany.bloglr.common.annotation.Controller;
 import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
@@ -56,5 +60,25 @@ public class BlogController {
 	public void editBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Edit blog post: " + blogPostDto);
 		blogEngine.editBlogPost(blogPostDto);
+	}
+	
+	/**
+	 * Retrieves a list of blog post
+	 * 
+	 * @return
+	 */
+	public List<BlogPostDto> getBlogPostList() {
+		List<BlogPost> blogPosts = blogEngine.getBlogList();
+		List<BlogPostDto> blogPostDtos = new ArrayList<>();
+		
+		blogPosts.stream().forEach(blogPost -> {
+			BlogPostDto blogPostDto = new BlogPostDto();
+			blogPostDto.setTitle(blogPost.getTitle());
+			blogPostDto.setContent(blogPost.getContent());
+			
+			blogPostDtos.add(blogPostDto);
+		});
+		
+		return blogPostDtos;
 	}
 }

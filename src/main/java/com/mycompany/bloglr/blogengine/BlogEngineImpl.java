@@ -85,6 +85,26 @@ public class BlogEngineImpl implements BlogEngine {
 	public void editBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Editing blog post: " + blogPostDto);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<BlogPost> getBlogList() {
+		// TODO: just return data model in engine & have a scheduled task to hit database to update
+		List<BlogPostEntity> blogPostEntities = persister.getBlogList();
+		List<BlogPost> blogPosts = new ArrayList<>();
+		
+		blogPostEntities.stream().forEach(blogPostEntity -> {
+			BlogPost blogPost = new BlogPost();
+			blogPost.setTitle(blogPostEntity.getBlogTitle());
+			blogPost.setContent(blogPostEntity.getBlogContent());
+			
+			blogPosts.add(blogPost);
+		});
+		
+		return blogPosts;
+	}
 	
 	
 }

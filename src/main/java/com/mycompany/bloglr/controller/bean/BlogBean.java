@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
@@ -43,30 +44,33 @@ public class BlogBean implements Serializable {
 	@Inject
 	private BlogController controller;
 	
-	public List<BlogPostDto> getBlogList() {
-		return blogList;
-	}
-
-	public void setBlogList(List<BlogPostDto> blogList) {
-		this.blogList = blogList;
-	}
+	
 		
+	/**
+	 * Constructor
+	 */
 	public BlogBean() {
-		setupBlogPostStubs();
+		//setupBlogPostStubs();
 	}
 	
-	private void setupBlogPostStubs() {
-		
-		for(int i = 1; i <= 20; i++) {
-			BlogPostDto blogPost = new BlogPostDto();
-			blogPost.setPostId(i);
-			blogPost.setTitle("Title");
-			blogPost.setContent("Content");
-			blogPost.setDateCreated(LocalDateTime.now());
-			blogList.add(blogPost);
-		}
-		
+	
+	@PostConstruct
+	private void init() {
+		blogList = controller.getBlogPostList();
 	}
+	
+//	private void setupBlogPostStubs() {
+//		
+//		for(int i = 1; i <= 20; i++) {
+//			BlogPostDto blogPost = new BlogPostDto();
+//			blogPost.setPostId(i);
+//			blogPost.setTitle("Title");
+//			blogPost.setContent("Content");
+//			blogPost.setDateCreated(LocalDateTime.now());
+//			blogList.add(blogPost);
+//		}
+//		
+//	}
 	
 	
 	public String deleteBlogPost(BlogPostDto blogPostDto) {
@@ -115,6 +119,15 @@ public class BlogBean implements Serializable {
 		}
 		
 		return null;
+	}
+	
+	public List<BlogPostDto> getBlogList() {
+		blogList = controller.getBlogPostList();
+		return blogList;
+	}
+
+	public void setBlogList(List<BlogPostDto> blogList) {
+		this.blogList = blogList;
 	}
 	
 }

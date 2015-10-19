@@ -5,6 +5,8 @@
  */
 package com.mycompany.bloglr.persister.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -51,6 +53,14 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	public BlogPostEntity delete(BlogPostEntity blogPostEntity) {
 		entityManager.remove(blogPostEntity);
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<BlogPostEntity> getAll() {
+		return entityManager.createQuery("SELECT B FROM BlogPostEntity B", BlogPostEntity.class).getResultList();
 	}
 	
 }

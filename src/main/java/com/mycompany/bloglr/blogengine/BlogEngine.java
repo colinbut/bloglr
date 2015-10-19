@@ -5,6 +5,9 @@
  */
 package com.mycompany.bloglr.blogengine;
 
+import java.util.List;
+
+import com.mycompany.bloglr.blogengine.domain.BlogPost;
 import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
 /**
@@ -19,4 +22,6 @@ public interface BlogEngine {
 	void deleteBlogPost(BlogPostDto blogPostDto);
 	
 	void editBlogPost(BlogPostDto blogPostDto);
+	
+	List<BlogPost> getBlogList();
 }
