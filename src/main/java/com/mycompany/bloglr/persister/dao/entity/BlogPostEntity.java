@@ -6,6 +6,8 @@
 package com.mycompany.bloglr.persister.dao.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,6 +38,7 @@ public class BlogPostEntity {
 	private String blogContent;
 	private Date createdDate;
 	private BlogUserEntity author;
+	private Set<BlogPostCommentEntity> blogPostComments = new HashSet<>(0);
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,6 +87,15 @@ public class BlogPostEntity {
 	
 	public void setAuthor(BlogUserEntity author) {
 		this.author = author;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogPost")
+	public Set<BlogPostCommentEntity> getBlogPostComments() {
+		return blogPostComments;
+	}
+
+	public void setBlogPostComments(Set<BlogPostCommentEntity> blogPostComments) {
+		this.blogPostComments = blogPostComments;
 	}
 
 	@Override

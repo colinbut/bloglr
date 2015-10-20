@@ -7,5 +7,5 @@ CREATE TABLE blog_post
 	title VARCHAR(100),
 	content TEXT,
 	author INT,
-	FOREIGN KEY (author) REFERENCES blog_user (user_id)
-);
+	FOREIGN KEY (author) REFERENCES blog_user (user_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -19,10 +19,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
 import com.mycompany.bloglr.common.annotation.DataAccess;
 import com.mycompany.bloglr.controller.dto.BlogPostDto;
 import com.mycompany.bloglr.persister.Persister;
+import com.mycompany.bloglr.persister.dao.entity.BlogPostCommentEntity;
 import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
@@ -78,8 +80,16 @@ public class BlogEngineImpl implements BlogEngine {
 	@Override
 	public void deleteBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Deleting blog post: " + blogPostDto);
-		BlogPostEntity blogPostEntity = persister.findBlogPost(1);
-		persister.deleteBlogPost(blogPostEntity);
+		BlogPostEntity blogPostEntity = persister.findBlogPost(blogPostDto.getPostId());
+		if(blogPostEntity == null) {
+			logger.error("Can't find blog post: " + blogPostDto.getPostId());
+			return;
+		}
+		
+		if(persister.deleteBlogPost(blogPostEntity)) {
+			logger.info("Successfully deleted blog post: " + blogPostDto.getPostId());
+			logger.debug(blogPostDto.toString());
+		}
 	}
 
 	/**
@@ -115,6 +125,53 @@ public class BlogEngineImpl implements BlogEngine {
 		});
 		
 		return blogPosts;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addBlogPostComment(BlogPostComment blogPostComment) {
+		
+		BlogPostCommentEntity blogPostCommentEntity = new BlogPostCommentEntity();
+		blogPostCommentEntity.setComment(blogPostComment.getComment());
+		blogPostCommentEntity.setCommentCreatedDate(Date.from(blogPostComment.getCommentCreated().atZone(ZoneId.systemDefault()).toInstant()));
+		
+		if(persister.addBlogPostComment(blogPostCommentEntity)) {
+			logger.info("Successfully added new blog post comment");
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BlogPost getBlogPost(int blogPostId) {
+		
+		BlogPost blogPost = new BlogPost();
+		
+		BlogPostEntity blogPostEntity = persister.findBlogPost(blogPostId);
+		if(blogPostEntity != null) {
+			
+			
+			blogPost.setPostId(blogPostEntity.getBlogPostId());
+			blogPost.setTitle(blogPostEntity.getBlogTitle());
+			blogPost.setContent(blogPostEntity.getBlogContent());
+			//blogPost.setDateCreated(blogPostEntity.getCreatedDate());
+			
+			List<BlogPostComment> blogPostComments = new ArrayList<>();
+			blogPostEntity.getBlogPostComments().stream().forEach(blogPostCommentEntity -> {
+				BlogPostComment blogPostComment = new BlogPostComment();
+				blogPostComment.setComment(blogPostCommentEntity.getComment());
+				blogPostComment.setCommentCreated(LocalDateTime.ofInstant(blogPostCommentEntity.getCommentCreatedDate().toInstant(), ZoneId.systemDefault()));
+				
+				blogPostComments.add(blogPostComment);
+			});
+			
+			blogPost.setComments(blogPostComments);
+			
+		}
+		return blogPost;
 	}
 	
 	

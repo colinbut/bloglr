@@ -7,6 +7,7 @@ package com.mycompany.bloglr.blogengine;
 
 import java.util.List;
 
+import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
 import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
@@ -17,6 +18,8 @@ import com.mycompany.bloglr.controller.dto.BlogPostDto;
  */
 public interface BlogEngine {
 
+	BlogPost getBlogPost(int blogPostId);
+	
 	void addBlogPost(BlogPostDto blogPostDto);
 	
 	void deleteBlogPost(BlogPostDto blogPostDto);
@@ -24,4 +27,8 @@ public interface BlogEngine {
 	void editBlogPost(BlogPostDto blogPostDto);
 	
 	List<BlogPost> getBlogList();
+	
+	void addBlogPostComment(BlogPostComment blogPostComment);
+	
+	
 }

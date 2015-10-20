@@ -20,7 +20,7 @@ public class BlogPost {
 	private LocalDateTime dateCreated;
 	private LocalDateTime dateUpdated;
 	private String content;
-	private List<BlogComment> comments;
+	private List<BlogPostComment> comments;
 	
 	private boolean editable;
 	
@@ -60,10 +60,10 @@ public class BlogPost {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public List<BlogComment> getComments() {
+	public List<BlogPostComment> getComments() {
 		return comments;
 	}
-	public void setComments(List<BlogComment> comments) {
+	public void setComments(List<BlogPostComment> comments) {
 		this.comments = comments;
 	}
 	public int getPostId() {

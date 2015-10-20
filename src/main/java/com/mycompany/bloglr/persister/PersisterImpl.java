@@ -13,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.common.annotation.DataAccess;
+import com.mycompany.bloglr.persister.dao.BlogPostCommentDao;
 import com.mycompany.bloglr.persister.dao.BlogPostDao;
 import com.mycompany.bloglr.persister.dao.BlogUserDao;
+import com.mycompany.bloglr.persister.dao.entity.BlogPostCommentEntity;
 import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
@@ -33,6 +35,9 @@ public class PersisterImpl implements Persister {
 	
 	@EJB
 	private BlogPostDao blogPostRepository;
+	
+	@EJB
+	private BlogPostCommentDao blogPostCommentDao;
 
 	/**
 	 * {@inheritDoc}
@@ -72,7 +77,7 @@ public class PersisterImpl implements Persister {
 	@Override
 	public boolean deleteBlogPost(BlogPostEntity blogPostEntity) {
 		blogPostRepository.delete(blogPostEntity);
-		return false;
+		return true;
 	}
 
 	/**
@@ -83,5 +88,14 @@ public class PersisterImpl implements Persister {
 		return blogPostRepository.getAll();
 	}
 	
-	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean addBlogPostComment(BlogPostCommentEntity blogPostCommentEntity) {
+		if(blogPostCommentDao.addBlogPostComment(blogPostCommentEntity) != null) {
+			return true;
+		}
+		return false;
+	}
 }

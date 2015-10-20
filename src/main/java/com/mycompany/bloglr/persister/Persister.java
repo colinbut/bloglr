@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import com.mycompany.bloglr.persister.dao.entity.BlogPostCommentEntity;
 import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
@@ -27,5 +28,7 @@ public interface Persister {
 	boolean deleteBlogPost(BlogPostEntity blogPostEntity);
 	
 	List<BlogPostEntity> getBlogList();
+	
+	boolean addBlogPostComment(BlogPostCommentEntity blogPostCommentEntity);
 	
 }

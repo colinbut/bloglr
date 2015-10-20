@@ -5,6 +5,7 @@
  */
 package com.mycompany.bloglr.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.blogengine.BlogEngine;
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
+import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.common.annotation.Controller;
+import com.mycompany.bloglr.controller.dto.BlogPostCommentDto;
 import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
 /**
@@ -31,6 +34,34 @@ public class BlogController {
 	
 	@Inject
 	private BlogEngine blogEngine;
+	
+	/**
+	 * Retrieves a blog post by the given id
+	 * 
+	 * @param blogPostId blog post id of the blog post
+	 * @return 
+	 */
+	public BlogPostDto getBlogPost(int blogPostId) {
+		
+		BlogPost blogPost = blogEngine.getBlogPost(blogPostId);
+		BlogPostDto blogPostDto = new BlogPostDto();
+		
+		//blogPostDto.setPostId(blogPost.getPostId());
+		blogPostDto.setTitle(blogPost.getTitle());
+		blogPostDto.setContent(blogPost.getContent());
+		
+		List<BlogPostCommentDto> blogPostCommentDtos = new ArrayList<>();
+		blogPost.getComments().stream().forEach(blogPostComment -> {
+			BlogPostCommentDto blogPostCommentDto = new BlogPostCommentDto();
+			blogPostCommentDto.setComment(blogPostComment.getComment());
+			blogPostCommentDto.setCommentCreated(blogPostComment.getCommentCreated());
+			blogPostCommentDtos.add(blogPostCommentDto);
+		});
+		
+		blogPostDto.setBlogPostComments(blogPostCommentDtos);
+		
+		return blogPostDto;
+	}
 	
 	/**
 	 * Adds a new blog post
@@ -83,4 +114,22 @@ public class BlogController {
 		
 		return blogPostDtos;
 	}
+	
+	/**
+	 * Add a new comment to an existing blog post
+	 * 
+	 * @param blogPostCommentDto
+	 */
+	public void addBlogPostComment(BlogPostCommentDto blogPostCommentDto) {
+		logger.info("Adding new comment: " + blogPostCommentDto.getComment());
+		
+		BlogPostComment blogPostComment = new BlogPostComment();
+		blogPostComment.setComment(blogPostCommentDto.getComment());
+		blogPostComment.setCommentCreated(blogPostCommentDto.getCommentCreated());
+		
+		blogEngine.addBlogPostComment(blogPostComment);
+		
+	}
+	
+	
 }

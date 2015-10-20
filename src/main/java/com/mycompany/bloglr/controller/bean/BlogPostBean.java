@@ -9,11 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
-import com.mycompany.bloglr.blogengine.domain.BlogComment;
+import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
+import com.mycompany.bloglr.controller.BlogController;
+import com.mycompany.bloglr.controller.dto.BlogPostCommentDto;
+import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
 /**
  * {@link BlogPostBean} 
@@ -28,19 +33,36 @@ public class BlogPostBean {
 	private int blogPostId;
 	private String blogPostTitle;
 	private String blogPostContent;
-	private List<BlogComment> blogPostComments = new ArrayList<>();
+	private List<BlogPostCommentDto> blogPostComments = new ArrayList<>();
 	
+	@Inject
+	private BlogController controller;
+	
+	/**
+	 * Constructor
+	 */
 	public BlogPostBean() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		blogPostId = Integer.parseInt(params.get("blogPostId"));
 		
-		// get stub data
+	}
+	
+	@PostConstruct
+	private void init() {
+		BlogPostDto blogPostDto = controller.getBlogPost(blogPostId);
+		blogPostTitle = blogPostDto.getTitle();
+		blogPostTitle = blogPostDto.getContent();
+		
+		blogPostComments = blogPostDto.getBlogPostComments();
+	}
+	
+	private void createBlogPostCommentStubs() {
 		blogPostTitle = "Title";
 		blogPostContent = "Content";
 		for(int i = 1; i < 5; i++) {
-			BlogComment blogComment = new BlogComment();
-			blogComment.setContent("Comment");
-			blogPostComments.add(blogComment);
+			BlogPostComment blogComment = new BlogPostComment();
+			//blogComment.setContent("Comment");
+			//blogPostComments.add(blogComment);
 		}
 	}
 	
@@ -68,11 +90,11 @@ public class BlogPostBean {
 		this.blogPostContent = blogPostContent;
 	}
 
-	public List<BlogComment> getBlogPostComments() {
+	public List<BlogPostCommentDto> getBlogPostComments() {
 		return blogPostComments;
 	}
 
-	public void setBlogPostComments(List<BlogComment> blogPostComments) {
+	public void setBlogPostComments(List<BlogPostCommentDto> blogPostComments) {
 		this.blogPostComments = blogPostComments;
 	}
 	

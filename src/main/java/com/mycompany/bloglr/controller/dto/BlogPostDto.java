@@ -6,6 +6,8 @@
 package com.mycompany.bloglr.controller.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -18,6 +20,8 @@ public class BlogPostDto {
 	private String title;
 	private String content;
 	private LocalDateTime dateCreated;
+	
+	private List<BlogPostCommentDto> blogPostComments = new ArrayList<>();
 
 	private boolean editable;
 	
@@ -51,6 +55,14 @@ public class BlogPostDto {
 
 	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+	public List<BlogPostCommentDto> getBlogPostComments() {
+		return blogPostComments;
+	}
+
+	public void setBlogPostComments(List<BlogPostCommentDto> blogPostComments) {
+		this.blogPostComments = blogPostComments;
 	}
 
 	public boolean isEditable() {
