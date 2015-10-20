@@ -5,6 +5,10 @@
  */
 package com.mycompany.bloglr.blogengine;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +65,7 @@ public class BlogEngineImpl implements BlogEngine {
 		BlogPostEntity blogPostEntity = new BlogPostEntity();
 		blogPostEntity.setBlogTitle(blogPostDto.getTitle());
 		blogPostEntity.setBlogContent(blogPostDto.getContent());
-		//blogPostEntity.setCreatedDate(blogPostDto.getDateCreated());
+		blogPostEntity.setCreatedDate(Date.from(blogPostDto.getDateCreated().atZone(ZoneId.systemDefault()).toInstant()));
 		
 		if(persister.addBlogPost(blogPostEntity)) {
 			logger.info("Successfully added new blog post");
@@ -97,8 +101,15 @@ public class BlogEngineImpl implements BlogEngine {
 		
 		blogPostEntities.stream().forEach(blogPostEntity -> {
 			BlogPost blogPost = new BlogPost();
+			
+			blogPost.setPostId(blogPostEntity.getBlogPostId());
 			blogPost.setTitle(blogPostEntity.getBlogTitle());
 			blogPost.setContent(blogPostEntity.getBlogContent());
+			
+			if(blogPostEntity.getCreatedDate() != null) {
+				blogPost.setDateCreated(LocalDateTime.ofInstant(blogPostEntity.getCreatedDate().toInstant(), 
+						ZoneId.systemDefault()));
+			}
 			
 			blogPosts.add(blogPost);
 		});

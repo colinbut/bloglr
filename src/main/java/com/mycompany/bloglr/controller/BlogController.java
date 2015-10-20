@@ -75,6 +75,8 @@ public class BlogController {
 			BlogPostDto blogPostDto = new BlogPostDto();
 			blogPostDto.setTitle(blogPost.getTitle());
 			blogPostDto.setContent(blogPost.getContent());
+			blogPostDto.setPostId(blogPost.getPostId());
+			blogPostDto.setDateCreated(blogPost.getDateCreated());
 			
 			blogPostDtos.add(blogPostDto);
 		});
