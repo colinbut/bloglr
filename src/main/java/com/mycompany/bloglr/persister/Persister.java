@@ -25,6 +25,7 @@ public interface Persister {
 
 	boolean editBlogPost(BlogPostEntity blogPostEntity);
 	
+	// delete by Id?
 	boolean deleteBlogPost(BlogPostEntity blogPostEntity);
 	
 	List<BlogPostEntity> getBlogList();
