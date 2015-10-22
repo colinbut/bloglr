@@ -31,10 +31,10 @@ public class PersisterImpl implements Persister {
 	private static final Logger logger = LoggerFactory.getLogger(PersisterImpl.class);
 	
 	@EJB
-	private BlogUserDao blogUserRepository;
+	private BlogUserDao blogUserDao;
 	
 	@EJB
-	private BlogPostDao blogPostRepository;
+	private BlogPostDao blogPostDao;
 	
 	@EJB
 	private BlogPostCommentDao blogPostCommentDao;
@@ -45,7 +45,7 @@ public class PersisterImpl implements Persister {
 	@Override
 	public BlogPostEntity findBlogPost(int id) {
 		logger.info("Finding blog post: " + id);
-		return blogPostRepository.findById(id);
+		return blogPostDao.findById(id);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class PersisterImpl implements Persister {
 		
 		logger.info("Adding new blog post to database");
 		
-		BlogPostEntity savedBlogPostEntity = blogPostRepository.save(blogPostEntity);
+		BlogPostEntity savedBlogPostEntity = blogPostDao.save(blogPostEntity);
 		if(savedBlogPostEntity != null) {
 			return true;
 		}
@@ -76,7 +76,7 @@ public class PersisterImpl implements Persister {
 	 */
 	@Override
 	public boolean deleteBlogPost(BlogPostEntity blogPostEntity) {
-		blogPostRepository.delete(blogPostEntity);
+		blogPostDao.delete(blogPostEntity);
 		return true;
 	}
 
@@ -85,7 +85,7 @@ public class PersisterImpl implements Persister {
 	 */
 	@Override
 	public List<BlogPostEntity> getBlogList() {
-		return blogPostRepository.getAll();
+		return blogPostDao.getAll();
 	}
 	
 	/**
