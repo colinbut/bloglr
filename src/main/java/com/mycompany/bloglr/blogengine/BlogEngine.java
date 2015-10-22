@@ -9,9 +9,13 @@ import java.util.List;
 
 import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
-import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
 /**
+ * The engine of the blog. Contains the main business logic for 
+ * the whole blog application
+ * 
+ * Can be seen as acting as a facade to more internal layers further down the 
+ * system
  * 
  * @author colin
  *
@@ -20,15 +24,15 @@ public interface BlogEngine {
 
 	BlogPost getBlogPost(int blogPostId);
 	
-	void addBlogPost(BlogPostDto blogPostDto);
+	void addBlogPost(BlogPost blogPost);
 	
-	void deleteBlogPost(BlogPostDto blogPostDto);
+	void deleteBlogPost(BlogPost blogPostDto);
 	
-	void editBlogPost(BlogPostDto blogPostDto);
+	void editBlogPost(BlogPost blogPostDto);
 	
 	List<BlogPost> getBlogList();
 	
-	void addBlogPostComment(BlogPostComment blogPostComment);
+	void addBlogPostComment(BlogPostComment blogPostComment, int blogPostId);
 	
 	
 }

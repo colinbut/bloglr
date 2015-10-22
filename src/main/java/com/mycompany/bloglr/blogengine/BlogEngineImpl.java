@@ -5,14 +5,9 @@
  */
 package com.mycompany.bloglr.blogengine;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
@@ -21,7 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
-import com.mycompany.bloglr.common.annotation.DataAccess;
+import com.mycompany.bloglr.common.transformer.BlogPostCommentToBlogPostCommentEntityTransformer;
+import com.mycompany.bloglr.common.transformer.BlogPostEntityToBlogPostTransformer;
+import com.mycompany.bloglr.common.transformer.BlogPostToBlogPostEntityTransformer;
+import com.mycompany.bloglr.common.transformer.TypeTransformer;
 import com.mycompany.bloglr.controller.dto.BlogPostDto;
 import com.mycompany.bloglr.persister.Persister;
 import com.mycompany.bloglr.persister.dao.entity.BlogPostCommentEntity;
@@ -40,6 +38,12 @@ public class BlogEngineImpl implements BlogEngine {
 	
 	@Inject
 	private Persister persister;
+	
+	
+	private TypeTransformer<BlogPost, BlogPostEntity> blogPostEntityToBlogPostTransformer = new BlogPostEntityToBlogPostTransformer();
+	private TypeTransformer<BlogPostEntity, BlogPost> blogPostToBlogPostEntityTransformer = new BlogPostToBlogPostEntityTransformer();
+	
+	//private TypeTransformer<BlogPostCommentEntity, BlogPostComment> blogPostCommentToBlogPostCommentEntityTransformer = new BlogPostCommentToBlogPostCommentEntityTransformer();
 	
 	private List<BlogPost> blogPosts = new ArrayList<>();
 	
@@ -60,14 +64,15 @@ public class BlogEngineImpl implements BlogEngine {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addBlogPost(BlogPostDto blogPostDto) {
+	public void addBlogPost(BlogPost blogPost) {
 		
-		logger.info("Adding new blog post: " + blogPostDto);
+		logger.info("Adding new blog post: " + blogPost);
+				
+		// should add to list
+		blogPosts.add(blogPost);
 		
-		BlogPostEntity blogPostEntity = new BlogPostEntity();
-		blogPostEntity.setBlogTitle(blogPostDto.getTitle());
-		blogPostEntity.setBlogContent(blogPostDto.getContent());
-		blogPostEntity.setCreatedDate(Date.from(blogPostDto.getDateCreated().atZone(ZoneId.systemDefault()).toInstant()));
+		// convert from model object to entity
+		BlogPostEntity blogPostEntity = blogPostToBlogPostEntityTransformer.transform(blogPost);
 		
 		if(persister.addBlogPost(blogPostEntity)) {
 			logger.info("Successfully added new blog post");
@@ -78,17 +83,17 @@ public class BlogEngineImpl implements BlogEngine {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void deleteBlogPost(BlogPostDto blogPostDto) {
-		logger.info("Deleting blog post: " + blogPostDto);
-		BlogPostEntity blogPostEntity = persister.findBlogPost(blogPostDto.getPostId());
+	public void deleteBlogPost(BlogPost blogPost) {
+		logger.info("Deleting blog post: " + blogPost);
+		BlogPostEntity blogPostEntity = persister.findBlogPost(blogPost.getPostId());
 		if(blogPostEntity == null) {
-			logger.error("Can't find blog post: " + blogPostDto.getPostId());
+			logger.error("Can't find blog post: " + blogPost.getPostId());
 			return;
 		}
 		
 		if(persister.deleteBlogPost(blogPostEntity)) {
-			logger.info("Successfully deleted blog post: " + blogPostDto.getPostId());
-			logger.debug(blogPostDto.toString());
+			logger.info("Successfully deleted blog post: " + blogPost.getPostId());
+			logger.debug(blogPost.toString());
 		}
 	}
 
@@ -96,8 +101,9 @@ public class BlogEngineImpl implements BlogEngine {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void editBlogPost(BlogPostDto blogPostDto) {
-		logger.info("Editing blog post: " + blogPostDto);
+	public void editBlogPost(BlogPost blogPost) {
+		logger.info("Editing blog post: " + blogPost);
+		throw new UnsupportedOperationException("Not Yet Implemented!");
 	}
 
 	/**
@@ -107,23 +113,7 @@ public class BlogEngineImpl implements BlogEngine {
 	public List<BlogPost> getBlogList() {
 		// TODO: just return data model in engine & have a scheduled task to hit database to update
 		List<BlogPostEntity> blogPostEntities = persister.getBlogList();
-		List<BlogPost> blogPosts = new ArrayList<>();
-		
-		blogPostEntities.stream().forEach(blogPostEntity -> {
-			BlogPost blogPost = new BlogPost();
-			
-			blogPost.setPostId(blogPostEntity.getBlogPostId());
-			blogPost.setTitle(blogPostEntity.getBlogTitle());
-			blogPost.setContent(blogPostEntity.getBlogContent());
-			
-			if(blogPostEntity.getCreatedDate() != null) {
-				blogPost.setDateCreated(LocalDateTime.ofInstant(blogPostEntity.getCreatedDate().toInstant(), 
-						ZoneId.systemDefault()));
-			}
-			
-			blogPosts.add(blogPost);
-		});
-		
+		List<BlogPost> blogPosts = blogPostEntityToBlogPostTransformer.transform(blogPostEntities);
 		return blogPosts;
 	}
 
@@ -131,15 +121,17 @@ public class BlogEngineImpl implements BlogEngine {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addBlogPostComment(BlogPostComment blogPostComment) {
+	public void addBlogPostComment(BlogPostComment blogPostComment, int blogPostId) {
 		
-		BlogPostCommentEntity blogPostCommentEntity = new BlogPostCommentEntity();
-		blogPostCommentEntity.setComment(blogPostComment.getComment());
-		blogPostCommentEntity.setCommentCreatedDate(Date.from(blogPostComment.getCommentCreated().atZone(ZoneId.systemDefault()).toInstant()));
+		// TODO: find the blog (should get from existing model
+		BlogPost blogPost = getBlogPost(blogPostId);
 		
-		if(persister.addBlogPostComment(blogPostCommentEntity)) {
-			logger.info("Successfully added new blog post comment");
-		}
+		// add to model
+		blogPost.getComments().add(blogPostComment);
+		
+		// actually save blog post
+		addBlogPost(blogPost);
+		
 	}
 
 	/**
@@ -147,30 +139,8 @@ public class BlogEngineImpl implements BlogEngine {
 	 */
 	@Override
 	public BlogPost getBlogPost(int blogPostId) {
-		
-		BlogPost blogPost = new BlogPost();
-		
 		BlogPostEntity blogPostEntity = persister.findBlogPost(blogPostId);
-		if(blogPostEntity != null) {
-			
-			
-			blogPost.setPostId(blogPostEntity.getBlogPostId());
-			blogPost.setTitle(blogPostEntity.getBlogTitle());
-			blogPost.setContent(blogPostEntity.getBlogContent());
-			//blogPost.setDateCreated(blogPostEntity.getCreatedDate());
-			
-			List<BlogPostComment> blogPostComments = new ArrayList<>();
-			blogPostEntity.getBlogPostComments().stream().forEach(blogPostCommentEntity -> {
-				BlogPostComment blogPostComment = new BlogPostComment();
-				blogPostComment.setComment(blogPostCommentEntity.getComment());
-				blogPostComment.setCommentCreated(LocalDateTime.ofInstant(blogPostCommentEntity.getCommentCreatedDate().toInstant(), ZoneId.systemDefault()));
-				
-				blogPostComments.add(blogPostComment);
-			});
-			
-			blogPost.setComments(blogPostComments);
-			
-		}
+		BlogPost blogPost = blogPostEntityToBlogPostTransformer.transform(blogPostEntity);
 		return blogPost;
 	}
 	

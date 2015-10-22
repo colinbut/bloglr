@@ -5,8 +5,6 @@
  */
 package com.mycompany.bloglr.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +16,10 @@ import com.mycompany.bloglr.blogengine.BlogEngine;
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
 import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.common.annotation.Controller;
+import com.mycompany.bloglr.common.transformer.BlogPostCommentDtoToBlogPostCommentTransformer;
+import com.mycompany.bloglr.common.transformer.BlogPostDtoToBlogPostTransformer;
+import com.mycompany.bloglr.common.transformer.BlogPostToBlogPostDtoTransformer;
+import com.mycompany.bloglr.common.transformer.TypeTransformer;
 import com.mycompany.bloglr.controller.dto.BlogPostCommentDto;
 import com.mycompany.bloglr.controller.dto.BlogPostDto;
 
@@ -32,6 +34,11 @@ public class BlogController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
 	
+	private TypeTransformer<BlogPost, BlogPostDto> blogPostDtoToBlogPostTransformer = new BlogPostDtoToBlogPostTransformer();
+	private TypeTransformer<BlogPostDto, BlogPost> blogPostToBlogPostDtoTransformer = new BlogPostToBlogPostDtoTransformer();
+	
+	private TypeTransformer<BlogPostComment, BlogPostCommentDto> blogPostCommentDtoToBlogPostCommentTransformer = new BlogPostCommentDtoToBlogPostCommentTransformer();
+	
 	@Inject
 	private BlogEngine blogEngine;
 	
@@ -42,24 +49,8 @@ public class BlogController {
 	 * @return 
 	 */
 	public BlogPostDto getBlogPost(int blogPostId) {
-		
 		BlogPost blogPost = blogEngine.getBlogPost(blogPostId);
-		BlogPostDto blogPostDto = new BlogPostDto();
-		
-		//blogPostDto.setPostId(blogPost.getPostId());
-		blogPostDto.setTitle(blogPost.getTitle());
-		blogPostDto.setContent(blogPost.getContent());
-		
-		List<BlogPostCommentDto> blogPostCommentDtos = new ArrayList<>();
-		blogPost.getComments().stream().forEach(blogPostComment -> {
-			BlogPostCommentDto blogPostCommentDto = new BlogPostCommentDto();
-			blogPostCommentDto.setComment(blogPostComment.getComment());
-			blogPostCommentDto.setCommentCreated(blogPostComment.getCommentCreated());
-			blogPostCommentDtos.add(blogPostCommentDto);
-		});
-		
-		blogPostDto.setBlogPostComments(blogPostCommentDtos);
-		
+		BlogPostDto blogPostDto = blogPostToBlogPostDtoTransformer.transform(blogPost); 
 		return blogPostDto;
 	}
 	
@@ -70,7 +61,10 @@ public class BlogController {
 	 */
 	public void addBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Adding new blog post: " + blogPostDto);
-		blogEngine.addBlogPost(blogPostDto);
+		
+		// convert from dto to model object
+		BlogPost blogPost = blogPostDtoToBlogPostTransformer.transform(blogPostDto);
+		blogEngine.addBlogPost(blogPost);
 	}
 	
 	/**
@@ -80,7 +74,8 @@ public class BlogController {
 	 */
 	public void deleteBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Deleting blog post: " + blogPostDto);
-		blogEngine.deleteBlogPost(blogPostDto);
+		BlogPost blogPost = blogPostDtoToBlogPostTransformer.transform(blogPostDto);
+		blogEngine.deleteBlogPost(blogPost);
 	}
 	
 	/**
@@ -90,7 +85,8 @@ public class BlogController {
 	 */
 	public void editBlogPost(BlogPostDto blogPostDto) {
 		logger.info("Edit blog post: " + blogPostDto);
-		blogEngine.editBlogPost(blogPostDto);
+		BlogPost blogPost = blogPostDtoToBlogPostTransformer.transform(blogPostDto);
+		blogEngine.editBlogPost(blogPost);
 	}
 	
 	/**
@@ -100,19 +96,7 @@ public class BlogController {
 	 */
 	public List<BlogPostDto> getBlogPostList() {
 		List<BlogPost> blogPosts = blogEngine.getBlogList();
-		List<BlogPostDto> blogPostDtos = new ArrayList<>();
-		
-		blogPosts.stream().forEach(blogPost -> {
-			BlogPostDto blogPostDto = new BlogPostDto();
-			blogPostDto.setTitle(blogPost.getTitle());
-			blogPostDto.setContent(blogPost.getContent());
-			blogPostDto.setPostId(blogPost.getPostId());
-			blogPostDto.setDateCreated(blogPost.getDateCreated());
-			
-			blogPostDtos.add(blogPostDto);
-		});
-		
-		return blogPostDtos;
+		return blogPostToBlogPostDtoTransformer.transform(blogPosts);
 	}
 	
 	/**
@@ -120,15 +104,9 @@ public class BlogController {
 	 * 
 	 * @param blogPostCommentDto
 	 */
-	public void addBlogPostComment(BlogPostCommentDto blogPostCommentDto) {
+	public void addBlogPostComment(BlogPostCommentDto blogPostCommentDto, int blogPostId) {
 		logger.info("Adding new comment: " + blogPostCommentDto.getComment());
-		
-		BlogPostComment blogPostComment = new BlogPostComment();
-		blogPostComment.setComment(blogPostCommentDto.getComment());
-		blogPostComment.setCommentCreated(blogPostCommentDto.getCommentCreated());
-		
-		blogEngine.addBlogPostComment(blogPostComment);
-		
+		blogEngine.addBlogPostComment(blogPostCommentDtoToBlogPostCommentTransformer.transform(blogPostCommentDto), blogPostId);
 	}
 	
 	

@@ -47,7 +47,7 @@ public class BlogCommentBean {
 		blogPostCommentDto.setComment(blogComment);
 		blogPostCommentDto.setCommentCreated(LocalDateTime.now());
 		
-		controller.addBlogPostComment(blogPostCommentDto);
+		controller.addBlogPostComment(blogPostCommentDto, blogPostId);
 		
 		return null;// return to same page with updated info
 	}
