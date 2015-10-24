@@ -28,7 +28,7 @@ import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 @DataAccess
 public class PersisterImpl implements Persister {
 
-	private static final Logger logger = LoggerFactory.getLogger(PersisterImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PersisterImpl.class);
 	
 	@EJB
 	private BlogUserDao blogUserDao;
@@ -44,7 +44,7 @@ public class PersisterImpl implements Persister {
 	 */
 	@Override
 	public BlogPostEntity findBlogPost(int id) {
-		logger.info("Finding blog post: " + id);
+		LOGGER.info("Finding blog post: " + id);
 		return blogPostDao.findById(id);
 	}
 
@@ -54,7 +54,7 @@ public class PersisterImpl implements Persister {
 	@Override
 	public boolean addBlogPost(BlogPostEntity blogPostEntity) {
 		
-		logger.info("Adding new blog post to database");
+		LOGGER.info("Adding new blog post to database");
 		
 		BlogPostEntity savedBlogPostEntity = blogPostDao.save(blogPostEntity);
 		if(savedBlogPostEntity != null) {

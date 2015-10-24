@@ -33,8 +33,7 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	 */
 	@Override
 	public BlogPostEntity findById(int id) {
-		BlogPostEntity blogPostEntity = entityManager.find(BlogPostEntity.class, id);
-		return blogPostEntity;
+		return entityManager.find(BlogPostEntity.class, id);
 	}
 
 	/**

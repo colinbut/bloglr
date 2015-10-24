@@ -32,7 +32,7 @@ import com.mycompany.bloglr.controller.dto.BlogPostDto;
 @Controller
 public class BlogController {
 
-	private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BlogController.class);
 	
 	private TypeTransformer<BlogPost, BlogPostDto> blogPostDtoToBlogPostTransformer = new BlogPostDtoToBlogPostTransformer();
 	private TypeTransformer<BlogPostDto, BlogPost> blogPostToBlogPostDtoTransformer = new BlogPostToBlogPostDtoTransformer();
@@ -50,8 +50,7 @@ public class BlogController {
 	 */
 	public BlogPostDto getBlogPost(int blogPostId) {
 		BlogPost blogPost = blogEngine.getBlogPost(blogPostId);
-		BlogPostDto blogPostDto = blogPostToBlogPostDtoTransformer.transform(blogPost); 
-		return blogPostDto;
+		return blogPostToBlogPostDtoTransformer.transform(blogPost);
 	}
 	
 	/**
@@ -60,7 +59,7 @@ public class BlogController {
 	 * @param blogPostDto
 	 */
 	public void addBlogPost(BlogPostDto blogPostDto) {
-		logger.info("Adding new blog post: " + blogPostDto);
+		LOGGER.info("Adding new blog post: " + blogPostDto);
 		
 		// convert from dto to model object
 		BlogPost blogPost = blogPostDtoToBlogPostTransformer.transform(blogPostDto);
@@ -73,7 +72,7 @@ public class BlogController {
 	 * @param blogPostDto
 	 */
 	public void deleteBlogPost(BlogPostDto blogPostDto) {
-		logger.info("Deleting blog post: " + blogPostDto);
+		LOGGER.info("Deleting blog post: " + blogPostDto);
 		BlogPost blogPost = blogPostDtoToBlogPostTransformer.transform(blogPostDto);
 		blogEngine.deleteBlogPost(blogPost);
 	}
@@ -84,7 +83,7 @@ public class BlogController {
 	 * @param blogPostDto
 	 */
 	public void editBlogPost(BlogPostDto blogPostDto) {
-		logger.info("Edit blog post: " + blogPostDto);
+		LOGGER.info("Edit blog post: " + blogPostDto);
 		BlogPost blogPost = blogPostDtoToBlogPostTransformer.transform(blogPostDto);
 		blogEngine.editBlogPost(blogPost);
 	}
@@ -105,7 +104,7 @@ public class BlogController {
 	 * @param blogPostCommentDto
 	 */
 	public void addBlogPostComment(BlogPostCommentDto blogPostCommentDto, int blogPostId) {
-		logger.info("Adding new comment: " + blogPostCommentDto.getComment());
+		LOGGER.info("Adding new comment: " + blogPostCommentDto.getComment());
 		blogEngine.addBlogPostComment(blogPostCommentDtoToBlogPostCommentTransformer.transform(blogPostCommentDto), blogPostId);
 	}
 	

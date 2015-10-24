@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * Viewmodel DTO for Blog Post
+ *
  * @author colin
  *
  */

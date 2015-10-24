@@ -43,9 +43,7 @@ public class BlogPostToBlogPostDtoTransformer implements TypeTransformer<BlogPos
 	@Override
 	public List<BlogPostDto> transform(Collection<BlogPost> blogPosts) {
 		List<BlogPostDto> blogPostDtos = new ArrayList<>();
-		blogPosts.stream().forEach(blogPost -> {
-			blogPostDtos.add(transform(blogPost));
-		});
+		blogPosts.stream().forEach(blogPost ->	blogPostDtos.add(transform(blogPost)));
 		return blogPostDtos;
 	}
 

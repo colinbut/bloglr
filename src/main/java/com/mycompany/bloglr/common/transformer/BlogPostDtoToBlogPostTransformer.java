@@ -25,6 +25,7 @@ public class BlogPostDtoToBlogPostTransformer implements TypeTransformer<BlogPos
 	@Override
 	public BlogPost transform(BlogPostDto blogPostDto) {
 		BlogPost blogPost = new BlogPost();
+		blogPost.setPostId(blogPostDto.getPostId());
 		blogPost.setTitle(blogPostDto.getTitle());
 		blogPost.setContent(blogPostDto.getContent());
 		blogPost.setDateCreated(blogPostDto.getDateCreated());
@@ -37,9 +38,7 @@ public class BlogPostDtoToBlogPostTransformer implements TypeTransformer<BlogPos
 	@Override
 	public List<BlogPost> transform(Collection<BlogPostDto> blogPostDtos) {
 		List<BlogPost> blogPosts = new ArrayList<>();
-		blogPostDtos.stream().forEach(blogPostDto -> {
-			blogPosts.add(transform(blogPostDto));
-		});
+		blogPostDtos.stream().forEach(blogPostDto -> blogPosts.add(transform(blogPostDto)));
 		return blogPosts;
 	}
 

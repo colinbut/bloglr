@@ -27,7 +27,7 @@ import com.mycompany.bloglr.controller.dto.BlogPostDto;
 @RequestScoped
 public class AddBlogPostBean {
 
-	private static final Logger logger = LoggerFactory.getLogger(AddBlogPostBean.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AddBlogPostBean.class);
 	
 	@Inject
 	private BlogController controller;
@@ -51,8 +51,13 @@ public class AddBlogPostBean {
 		this.blogPostContent = blogPostContent;
 	}
 
+	/**
+	 * Adds a new blog post
+	 *
+	 * @return
+     */
 	public String addBlogPost() {
-		logger.info("Adding new blog post: ");
+		LOGGER.info("Adding new blog post: ");
 		BlogPostDto blogPostDto = new BlogPostDto();
 		blogPostDto.setTitle(blogPostTitle);
 		blogPostDto.setContent(blogPostContent);

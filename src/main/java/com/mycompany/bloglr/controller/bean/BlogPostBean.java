@@ -51,20 +51,11 @@ public class BlogPostBean {
 	private void init() {
 		BlogPostDto blogPostDto = controller.getBlogPost(blogPostId);
 		blogPostTitle = blogPostDto.getTitle();
-		blogPostTitle = blogPostDto.getContent();
+		blogPostContent = blogPostDto.getContent();
 		
 		blogPostComments = blogPostDto.getBlogPostComments();
 	}
-	
-	private void createBlogPostCommentStubs() {
-		blogPostTitle = "Title";
-		blogPostContent = "Content";
-		for(int i = 1; i < 5; i++) {
-			BlogPostComment blogComment = new BlogPostComment();
-			//blogComment.setContent("Comment");
-			//blogPostComments.add(blogComment);
-		}
-	}
+
 	
 	public int getBlogPostId() {
 		return blogPostId;

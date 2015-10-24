@@ -5,9 +5,11 @@
 *.dll
 *.exe
 *.o
+*.iml
 *.so
 *.project
 *.classpath
+*.idea/*
 
 .settings/*
 

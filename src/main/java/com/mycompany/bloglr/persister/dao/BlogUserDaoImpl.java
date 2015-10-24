@@ -28,8 +28,7 @@ public class BlogUserDaoImpl implements BlogUserDao {
 	 */
 	@Override
 	public BlogUserEntity getUserById(int id) {
-		BlogUserEntity blogUserEntity = entityManager.find(BlogUserEntity.class, 1);
-		return blogUserEntity;
+		return entityManager.find(BlogUserEntity.class, 1);
 	}
 	
 }

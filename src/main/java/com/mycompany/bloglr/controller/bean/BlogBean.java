@@ -6,7 +6,6 @@
 package com.mycompany.bloglr.controller.bean;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,7 +34,7 @@ public class BlogBean implements Serializable {
 
 	private static final long serialVersionUID = 2112003448015528406L;
 
-	private static final Logger logger = LoggerFactory.getLogger(BlogBean.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BlogBean.class);
 	
 	private List<BlogPostDto> blogList = new ArrayList<>();
 	
@@ -50,7 +49,7 @@ public class BlogBean implements Serializable {
 	 * Constructor
 	 */
 	public BlogBean() {
-		//setupBlogPostStubs();
+
 	}
 	
 	
@@ -59,29 +58,16 @@ public class BlogBean implements Serializable {
 		blogList = controller.getBlogPostList();
 	}
 	
-//	private void setupBlogPostStubs() {
-//		
-//		for(int i = 1; i <= 20; i++) {
-//			BlogPostDto blogPost = new BlogPostDto();
-//			blogPost.setPostId(i);
-//			blogPost.setTitle("Title");
-//			blogPost.setContent("Content");
-//			blogPost.setDateCreated(LocalDateTime.now());
-//			blogList.add(blogPost);
-//		}
-//		
-//	}
-	
-	
+
 	public String deleteBlogPost(BlogPostDto blogPostDto) {
-		logger.info("Deleting blog post: " + blogPostDto);
+		LOGGER.info("Deleting blog post: " + blogPostDto);
 		controller.deleteBlogPost(blogPostDto);
 		blogList.remove(blogPostDto);
 		return null;
 	}
 	
 	public String editBlogPost(BlogPostDto blogPostdto) {
-		logger.info("Edited blog post: " + blogPostdto);
+		LOGGER.info("Edited blog post: " + blogPostdto);
 		blogPostdto.setEditable(true);
 		return null;
 	}

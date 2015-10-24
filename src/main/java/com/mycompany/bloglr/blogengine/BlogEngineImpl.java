@@ -16,13 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
-import com.mycompany.bloglr.common.transformer.BlogPostCommentToBlogPostCommentEntityTransformer;
 import com.mycompany.bloglr.common.transformer.BlogPostEntityToBlogPostTransformer;
 import com.mycompany.bloglr.common.transformer.BlogPostToBlogPostEntityTransformer;
 import com.mycompany.bloglr.common.transformer.TypeTransformer;
-import com.mycompany.bloglr.controller.dto.BlogPostDto;
 import com.mycompany.bloglr.persister.Persister;
-import com.mycompany.bloglr.persister.dao.entity.BlogPostCommentEntity;
 import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
@@ -34,7 +31,7 @@ import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 @Model
 public class BlogEngineImpl implements BlogEngine {
 
-	private static final Logger logger = LoggerFactory.getLogger(BlogEngineImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BlogEngineImpl.class);
 	
 	@Inject
 	private Persister persister;
@@ -66,16 +63,17 @@ public class BlogEngineImpl implements BlogEngine {
 	@Override
 	public void addBlogPost(BlogPost blogPost) {
 		
-		logger.info("Adding new blog post: " + blogPost);
+		LOGGER.info("Adding new blog post: " + blogPost);
 				
 		// should add to list
 		blogPosts.add(blogPost);
 		
 		// convert from model object to entity
 		BlogPostEntity blogPostEntity = blogPostToBlogPostEntityTransformer.transform(blogPost);
-		
+		LOGGER.info(blogPostEntity.toString());
+
 		if(persister.addBlogPost(blogPostEntity)) {
-			logger.info("Successfully added new blog post");
+			LOGGER.info("Successfully added new blog post");
 		}
 	}
 
@@ -84,16 +82,16 @@ public class BlogEngineImpl implements BlogEngine {
 	 */
 	@Override
 	public void deleteBlogPost(BlogPost blogPost) {
-		logger.info("Deleting blog post: " + blogPost);
+		LOGGER.info("Deleting blog post: " + blogPost);
 		BlogPostEntity blogPostEntity = persister.findBlogPost(blogPost.getPostId());
 		if(blogPostEntity == null) {
-			logger.error("Can't find blog post: " + blogPost.getPostId());
+			LOGGER.error("Can't find blog post: " + blogPost.getPostId());
 			return;
 		}
 		
 		if(persister.deleteBlogPost(blogPostEntity)) {
-			logger.info("Successfully deleted blog post: " + blogPost.getPostId());
-			logger.debug(blogPost.toString());
+			LOGGER.info("Successfully deleted blog post: " + blogPost.getPostId());
+			LOGGER.debug(blogPost.toString());
 		}
 	}
 
@@ -102,7 +100,7 @@ public class BlogEngineImpl implements BlogEngine {
 	 */
 	@Override
 	public void editBlogPost(BlogPost blogPost) {
-		logger.info("Editing blog post: " + blogPost);
+		LOGGER.info("Editing blog post: " + blogPost);
 		throw new UnsupportedOperationException("Not Yet Implemented!");
 	}
 
@@ -123,14 +121,14 @@ public class BlogEngineImpl implements BlogEngine {
 	@Override
 	public void addBlogPostComment(BlogPostComment blogPostComment, int blogPostId) {
 		
-		// TODO: find the blog (should get from existing model
+		// TODO: find the blog (should get from existing model)
 		BlogPost blogPost = getBlogPost(blogPostId);
 		
 		// add to model
 		blogPost.getComments().add(blogPostComment);
 		
 		// actually save blog post
-		addBlogPost(blogPost);
+		addBlogPost(blogPost); // TODO:  can't use this code as we already got blogPostId
 		
 	}
 

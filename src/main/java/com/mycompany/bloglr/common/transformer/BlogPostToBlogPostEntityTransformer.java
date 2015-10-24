@@ -6,6 +6,7 @@
 package com.mycompany.bloglr.common.transformer;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -35,17 +36,17 @@ public class BlogPostToBlogPostEntityTransformer implements TypeTransformer<Blog
 		blogPostEntity.setBlogTitle(blogPost.getTitle());
 		blogPostEntity.setBlogContent(blogPost.getContent());
 		blogPostEntity.setCreatedDate(localDateTimeToDateConverter.convert(blogPost.getDateCreated()));
-		
-		return null;
+		return blogPostEntity;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<BlogPostEntity> transform(Collection<BlogPost> u) {
-		
-		return null;
+	public List<BlogPostEntity> transform(Collection<BlogPost> blogPosts) {
+		List<BlogPostEntity> blogPostEntities = new ArrayList<>();
+		blogPosts.stream().forEach(blogPost -> blogPostEntities.add(transform(blogPost)));
+		return blogPostEntities;
 	}
 
 	
