@@ -7,3 +7,5 @@ Simple blog where you can:
 - edit existing blog posts
 - delete blog posts
 - add a comment to a blog post
+
+See [Bloglr wiki](https://github.com/colinbut/bloglr/wiki)
