@@ -11,7 +11,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -27,7 +27,7 @@ import com.mycompany.bloglr.controller.dto.BlogPostDto;
  *
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class BlogPostBean {
 
 	private int blogPostId;
