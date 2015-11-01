@@ -38,10 +38,19 @@ public class BlogPostDaoImpl implements BlogPostDao {
 
 	/**
 	 * {@inheritDoc}
+     */
+	@Override
+	public BlogPostEntity add(BlogPostEntity blogPostEntity) {
+		entityManager.persist(blogPostEntity);
+		return blogPostEntity;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public BlogPostEntity save(BlogPostEntity blogPostEntity) {
-		entityManager.persist(blogPostEntity);
+		entityManager.merge(blogPostEntity);
 		return blogPostEntity;
 	}
 

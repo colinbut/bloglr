@@ -6,14 +6,13 @@
 package com.mycompany.bloglr.common.transformer;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.mycompany.bloglr.blogengine.domain.BlogPost;
+import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.common.converter.Converter;
 import com.mycompany.bloglr.common.converter.LocalDateTimeToDateConverter;
+import com.mycompany.bloglr.persister.dao.entity.BlogPostCommentEntity;
 import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 
 /**
@@ -25,7 +24,7 @@ public class BlogPostToBlogPostEntityTransformer implements TypeTransformer<Blog
 
 	private Converter<Date, LocalDateTime> localDateTimeToDateConverter = new LocalDateTimeToDateConverter();
 	
-	
+	private TypeTransformer<BlogPostCommentEntity, BlogPostComment> blogPostCommentEntityBlogPostCommentTypeTransformer = new BlogPostCommentToBlogPostCommentEntityTransformer();
 	
 	/**
 	 * {@inheritDoc}
@@ -33,8 +32,15 @@ public class BlogPostToBlogPostEntityTransformer implements TypeTransformer<Blog
 	@Override
 	public BlogPostEntity transform(BlogPost blogPost) {
 		BlogPostEntity blogPostEntity = new BlogPostEntity();
+		blogPostEntity.setBlogPostId(blogPost.getPostId());
 		blogPostEntity.setBlogTitle(blogPost.getTitle());
 		blogPostEntity.setBlogContent(blogPost.getContent());
+
+		blogPostEntity.setBlogPostComments(new HashSet<>(blogPostCommentEntityBlogPostCommentTypeTransformer.transform(blogPost.getComments())));
+		blogPostEntity.getBlogPostComments().stream().forEach(blogPostCommentEntity -> {
+			blogPostCommentEntity.setBlogPost(blogPostEntity);
+		});
+
 		blogPostEntity.setCreatedDate(localDateTimeToDateConverter.convert(blogPost.getDateCreated()));
 		return blogPostEntity;
 	}
@@ -43,8 +49,8 @@ public class BlogPostToBlogPostEntityTransformer implements TypeTransformer<Blog
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<BlogPostEntity> transform(Collection<BlogPost> blogPosts) {
-		List<BlogPostEntity> blogPostEntities = new ArrayList<>();
+	public Set<BlogPostEntity> transform(Collection<BlogPost> blogPosts) {
+		Set<BlogPostEntity> blogPostEntities = new HashSet<>();
 		blogPosts.stream().forEach(blogPost -> blogPostEntities.add(transform(blogPost)));
 		return blogPostEntities;
 	}

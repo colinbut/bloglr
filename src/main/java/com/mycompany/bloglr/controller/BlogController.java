@@ -5,6 +5,7 @@
  */
 package com.mycompany.bloglr.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -95,7 +96,7 @@ public class BlogController {
 	 */
 	public List<BlogPostDto> getBlogPostList() {
 		List<BlogPost> blogPosts = blogEngine.getBlogList();
-		return blogPostToBlogPostDtoTransformer.transform(blogPosts);
+		return new ArrayList<>(blogPostToBlogPostDtoTransformer.transform(blogPosts));
 	}
 	
 	/**

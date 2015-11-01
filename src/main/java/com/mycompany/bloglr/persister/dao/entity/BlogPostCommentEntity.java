@@ -70,8 +70,9 @@ public class BlogPostCommentEntity {
 		return blogPost;
 	}
 
-	public void setBlogPost(BlogPostEntity blogPost) {
-		this.blogPost = blogPost;
+	public void setBlogPost(BlogPostEntity blogPostEntity) {
+		this.blogPost = blogPostEntity;
+		//blogPostEntity.getBlogPostComments().add(this);
 	}
 
 	@Override

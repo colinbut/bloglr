@@ -7,6 +7,7 @@ package com.mycompany.bloglr.common.transformer;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A transformer interface that allowing the transformation from type T to type U
@@ -33,5 +34,5 @@ public interface TypeTransformer <T, U> {
 	 * @param u list of type U
 	 * @return {@link List} of T
 	 */
-	List<T> transform(Collection<U> u);
+	Collection<T> transform(Collection<U> u);
 }

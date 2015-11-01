@@ -23,6 +23,8 @@ public interface Persister {
 	
 	boolean addBlogPost(BlogPostEntity blogPostEntity);
 
+	boolean saveBlogPost(BlogPostEntity blogPostEntity);
+
 	boolean editBlogPost(BlogPostEntity blogPostEntity);
 	
 	// delete by Id?

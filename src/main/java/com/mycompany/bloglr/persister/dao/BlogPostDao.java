@@ -21,7 +21,9 @@ import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
 public interface BlogPostDao {
 
 	BlogPostEntity findById(int id);
-	
+
+	BlogPostEntity add(BlogPostEntity blogPostEntity);
+
 	BlogPostEntity save(BlogPostEntity blogPostEntity);
 	
 	BlogPostEntity delete(BlogPostEntity blogPostEntity);

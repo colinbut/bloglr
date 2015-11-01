@@ -8,7 +8,7 @@ package com.mycompany.bloglr.controller.bean;
 import java.time.LocalDateTime;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -22,10 +22,10 @@ import com.mycompany.bloglr.controller.dto.BlogPostCommentDto;
  *
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class BlogCommentBean {
 
-	private static final Logger logger = LoggerFactory.getLogger(BlogCommentBean.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BlogCommentBean.class);
 	
 	@Inject
 	private BlogController controller;
@@ -41,7 +41,7 @@ public class BlogCommentBean {
 	}
 	
 	public String addBlogComment(int blogPostId) {
-		logger.info("Adding blog comment: " + blogComment + " for blog: " + blogPostId);
+		LOGGER.info("Adding blog comment: " + blogComment + " for blog: " + blogPostId);
 		
 		BlogPostCommentDto blogPostCommentDto = new BlogPostCommentDto();
 		blogPostCommentDto.setComment(blogComment);

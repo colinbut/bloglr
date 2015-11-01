@@ -20,7 +20,7 @@
 	<div>
 		<ui:repeat value="#{blogPostBean.blogPostComments}" var="blogPostComment" varStatus="status">
 			<div>
-				<h:outputText value="#{blogPostComment.content}"></h:outputText>
+				<h:outputText value="#{blogPostComment.comment}"></h:outputText>
 			</div>
 		</ui:repeat>
 		
@@ -35,7 +35,7 @@
 					</tr>
 					<tr>
 						<td>
-							<h:commandButton value="Add" action="#{blogCommentBean.addBlogComment(blogPostBean.blogPostId)}"></h:commandButton>
+							<h:commandButton value="Add" action="#{blogCommentBean.addBlogComment(18)}"></h:commandButton>
 						</td>
 					</tr>
 				</table>

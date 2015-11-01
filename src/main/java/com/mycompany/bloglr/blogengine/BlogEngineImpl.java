@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import com.mycompany.bloglr.persister.dao.entity.BlogPostEntity;
  *
  */
 @Model
+@Transactional(Transactional.TxType.SUPPORTS)
 public class BlogEngineImpl implements BlogEngine {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BlogEngineImpl.class);
@@ -67,20 +69,25 @@ public class BlogEngineImpl implements BlogEngine {
 				
 		// should add to list
 		blogPosts.add(blogPost);
-		
+
+
 		// convert from model object to entity
 		BlogPostEntity blogPostEntity = blogPostToBlogPostEntityTransformer.transform(blogPost);
 		LOGGER.info(blogPostEntity.toString());
 
 		if(persister.addBlogPost(blogPostEntity)) {
-			LOGGER.info("Successfully added new blog post");
+			LOGGER.info(String.format("Successfully added new blog post: %s", blogPost));
+
 		}
+
+
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Transactional(Transactional.TxType.REQUIRES_NEW)
 	public void deleteBlogPost(BlogPost blogPost) {
 		LOGGER.info("Deleting blog post: " + blogPost);
 		BlogPostEntity blogPostEntity = persister.findBlogPost(blogPost.getPostId());
@@ -111,7 +118,7 @@ public class BlogEngineImpl implements BlogEngine {
 	public List<BlogPost> getBlogList() {
 		// TODO: just return data model in engine & have a scheduled task to hit database to update
 		List<BlogPostEntity> blogPostEntities = persister.getBlogList();
-		List<BlogPost> blogPosts = blogPostEntityToBlogPostTransformer.transform(blogPostEntities);
+		List<BlogPost> blogPosts = new ArrayList<>(blogPostEntityToBlogPostTransformer.transform(blogPostEntities));
 		return blogPosts;
 	}
 
@@ -122,13 +129,25 @@ public class BlogEngineImpl implements BlogEngine {
 	public void addBlogPostComment(BlogPostComment blogPostComment, int blogPostId) {
 		
 		// TODO: find the blog (should get from existing model)
+        BlogPost blogPost1 = null;
+        for(BlogPost bp1 : blogPosts) {
+            if(bp1.getPostId() == blogPostId) {
+                blogPost1 = bp1;
+                break;
+            }
+        }
+
+        // Gets from DB
 		BlogPost blogPost = getBlogPost(blogPostId);
 		
 		// add to model
 		blogPost.getComments().add(blogPostComment);
 		
 		// actually save blog post
-		addBlogPost(blogPost); // TODO:  can't use this code as we already got blogPostId
+		// convert from model object to entity
+		BlogPostEntity blogPostEntity = blogPostToBlogPostEntityTransformer.transform(blogPost);
+		LOGGER.info(blogPostEntity.toString());
+		persister.saveBlogPost(blogPostEntity);
 		
 	}
 
@@ -141,6 +160,7 @@ public class BlogEngineImpl implements BlogEngine {
 		BlogPost blogPost = blogPostEntityToBlogPostTransformer.transform(blogPostEntity);
 		return blogPost;
 	}
-	
+
+
 	
 }

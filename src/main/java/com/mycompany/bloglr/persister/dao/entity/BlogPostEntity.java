@@ -89,7 +89,7 @@ public class BlogPostEntity {
 		this.author = author;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogPost")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogPost", cascade = {CascadeType.ALL})
 	public Set<BlogPostCommentEntity> getBlogPostComments() {
 		return blogPostComments;
 	}

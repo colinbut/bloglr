@@ -7,10 +7,7 @@ package com.mycompany.bloglr.common.transformer;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.mycompany.bloglr.blogengine.domain.BlogPostComment;
 import com.mycompany.bloglr.common.converter.Converter;
@@ -42,11 +39,9 @@ public class BlogPostCommentToBlogPostCommentEntityTransformer implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<BlogPostCommentEntity> transform(Collection<BlogPostComment> blogPostComments) {
-		List<BlogPostCommentEntity> blogPostCommentEntities = new ArrayList<>();
-		blogPostComments.stream().forEach(blogPostComment -> {
-			blogPostCommentEntities.add(transform(blogPostComment));
-		});
+	public Set<BlogPostCommentEntity> transform(Collection<BlogPostComment> blogPostComments) {
+		Set<BlogPostCommentEntity> blogPostCommentEntities = new HashSet<>();
+		blogPostComments.stream().forEach(blogPostComment -> blogPostCommentEntities.add(transform(blogPostComment)));
 		return blogPostCommentEntities;
 	}
 

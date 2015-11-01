@@ -33,7 +33,7 @@ public class BlogPostToBlogPostDtoTransformer implements TypeTransformer<BlogPos
 		blogPostDto.setTitle(blogPost.getTitle());
 		blogPostDto.setContent(blogPost.getContent());
 		blogPostDto.setDateCreated(blogPost.getDateCreated());
-		blogPostDto.setBlogPostComments(blogPostCommentToBlogPostCommentDtoTransformer.transform(blogPost.getComments()));
+		blogPostDto.setBlogPostComments(new ArrayList<>(blogPostCommentToBlogPostCommentDtoTransformer.transform(blogPost.getComments())));
 		return blogPostDto;
 	}
 

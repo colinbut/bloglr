@@ -44,7 +44,7 @@ public class BlogPostEntityToBlogPostTransformer implements TypeTransformer<Blog
 		blogPost.setTitle(blogPostEntity.getBlogTitle());
 		blogPost.setContent(blogPostEntity.getBlogContent());
 		blogPost.setDateCreated(dateToLocalDateTimeConverter.convert(blogPostEntity.getCreatedDate()));
-		blogPost.setComments(transformer.transform(blogPostEntity.getBlogPostComments()));
+		blogPost.setComments(new ArrayList<>(transformer.transform(blogPostEntity.getBlogPostComments())));
 		return blogPost;
 	}
 

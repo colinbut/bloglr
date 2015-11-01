@@ -56,6 +56,20 @@ public class PersisterImpl implements Persister {
 		
 		LOGGER.info("Adding new blog post to database");
 		
+		BlogPostEntity savedBlogPostEntity = blogPostDao.add(blogPostEntity);
+		if(savedBlogPostEntity != null) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+     */
+	@Override
+	public boolean saveBlogPost(BlogPostEntity blogPostEntity) {
+		LOGGER.info("Saving existing blog post to database");
+
 		BlogPostEntity savedBlogPostEntity = blogPostDao.save(blogPostEntity);
 		if(savedBlogPostEntity != null) {
 			return true;
