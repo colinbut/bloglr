@@ -6,6 +6,7 @@
 package com.mycompany.bloglr.blogengine.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class BlogPost {
 	private LocalDateTime dateCreated;
 	private LocalDateTime dateUpdated;
 	private String content;
-	private List<BlogPostComment> comments;
+	private List<BlogPostComment> comments = new ArrayList<>();
 	
 	private boolean editable;
 	
